@@ -40,7 +40,6 @@ $(function() {
     let playerTwoName = $(`#player_two_name`).val();
     const playerOne = new Player(playerOneName, 1, 0, 0);
     const playerTwo = new Player(playerTwoName, 1, 0, 0);
-    console.log(playerOne, playerTwo)
 
     $(`#initial_info`).slideUp();
     $(`#game`).slideDown();
