@@ -10,14 +10,19 @@ function Player(name, turnNumber, turnScore, totalScore) {
 //method to roll die.
 Player.prototype.roll = function() {
   let dieRoll = Math.floor(Math.random() * 6) + 1
-  $('#die_image').empty();
+  $('.die_image').empty();
   if (dieRoll != 1){
-    this.turnScore =+ dieRoll
-    $('body').fadeOut();
+    $('body').fadeOut('slow');
     $('.die_image').append(`<img src='img/die${dieRoll}.svg' alt='A picture of a die with ${dieRoll} displayed'>`)
-    $('body').fadeIn();
+    $('body').fadeIn('fast');
+    this.turnScore += dieRoll
   } else if (dieRoll === 1) {
+    $('body').fadeOut('slow');
+    $('.die_image').append(`<img src='img/die${dieRoll}.svg' alt='A picture of a die with ${dieRoll} displayed'>`)
+    $('body').fadeIn('fast');
     this.turnScore = 0;
+    this.turnNumber += 1;
+    return
   }
 }
 
@@ -59,6 +64,18 @@ $(function() {
     }
     setPlayerOneCard();
     setPlayerTwoCard();
+
+    $('#player_one_roll').click(function() {
+      playerOne.roll();
+      $('.player_one_turn_score').text(`${playerOne.turnScore}`);
+      if (checkForWinner(playerOne) === 'WON') {
+        gameOver();
+      } else {
+        $('#player_one_turn').fadeOut();
+        $('#player_two_turn').fadeIn();
+      }
+    });
+
 
 
   });
