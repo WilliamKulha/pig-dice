@@ -13,27 +13,29 @@ Player.prototype.roll = function() {
   $('.die_image').empty();
   if (dieRoll != 1){
     $('body').fadeOut('slow');
-    $('.die_image').append(`<img src='img/die${dieRoll}.svg' alt='A picture of a die with ${dieRoll} displayed'>`)
     $('body').fadeIn('fast');
+    $('.die_image').append(`<img src='img/die${dieRoll}.svg' alt='A picture of a die with ${dieRoll} displayed'>`)
     this.turnScore += dieRoll
   } else if (dieRoll === 1) {
     $('body').fadeOut('slow');
-    $('.die_image').append(`<img src='img/die${dieRoll}.svg' alt='A picture of a die with ${dieRoll} displayed'>`)
     $('body').fadeIn('fast');
+    $('.die_image').append(`<img src='img/die${dieRoll}.svg' alt='A picture of a die with ${dieRoll} displayed'>`)
     this.turnScore = 0;
-    this.turnNumber += 1;
     return "Rolled One"
   }
 }
 
-//check for winner
-function checkForWinner(player) {
-  if (player.totalScore < 100) {
-    return
-  } else if (player.totalScore >= 100) {
-    return 'WON'
+Player.prototype.hold = function() {
+  this.totalScore += this.turnScore;
+  this.turnScore = 0;
+}
+
+Player.prototype.checkForWinner = function() {
+  if (this.totalScore >= 100) {
+    return "WON";
   }
 }
+
 
 
 
@@ -65,22 +67,54 @@ $(function() {
     setPlayerOneCard();
     setPlayerTwoCard();
 
-    $('#player_one_roll').click(function() {
-      let pOneRoll = playerOne.roll();
-      $('.player_one_turn_score').text(`${playerOne.turnScore}`);
-      if (pOneRoll === "Rolled One") {
+      $('#player_one_roll').click(function() {
+        let pOneRoll = playerOne.roll();
+        $('.player_one_turn_score').text(`${playerOne.turnScore}`);
+        if (pOneRoll === "Rolled One") {
+          playerOne.turnNumber += 1;
+          setPlayerOneCard();
+          $('#player_one_turn').fadeOut();
+          $('#player_two_turn').fadeIn();
+        }
+      });
+      $('#player_one_hold').click(function() {
+        playerOne.hold();
+        playerOne.turnNumber += 1;
         $('#player_one_turn').fadeOut();
         $('#player_two_turn').fadeIn();
-      }
-      /*if (checkForWinner(playerOne) === 'WON') {
-        gameOver();
-      } else {
-        $('#player_one_turn').fadeOut();
-        $('#player_two_turn').fadeIn();
-      }*/
-    });
+        setPlayerOneCard();
 
-
-
+        let wonOrNot = playerOne.checkForWinner();
+        if (wonOrNot === "WON") {
+          $(`body`).fadeOut('slow');
+          alert(`${playerOne.playerName} has won with ${playerOne.totalScore} points! If you'd like to play again, refresh the page.`)
+        } else {
+          return;
+        }
+      });
+      $('#player_two_roll').click(function() {
+        let pTwoRoll = playerTwo.roll();
+        $('.player_two_turn_score').text(`${playerTwo.turnScore}`);
+        if (pTwoRoll === "Rolled One") {
+          playerTwo.turnNumber += 1;
+          setPlayerTwoCard();
+          $('#player_one_turn').fadeIn();
+          $('#player_two_turn').fadeOut();
+        }
+      });
+      $('#player_two_hold').click(function() {
+        playerTwo.hold();
+        playerTwo.turnNumber += 1;
+        $('#player_two_turn').fadeOut();
+        $('#player_one_turn').fadeIn();
+        setPlayerTwoCard();
+        let wonOrNot = playerTwo.checkForWinner();
+        if (wonOrNot === "WON") {
+          $(`body`).fadeOut('slow');
+          alert(`${playerTwo.playerName} has won with ${playerTwo.totalScore} points! If you'd like to play again, refresh the page.`)
+        } else {
+          return;
+        }
+      });
   });
 });
