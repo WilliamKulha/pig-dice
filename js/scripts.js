@@ -22,7 +22,7 @@ Player.prototype.roll = function() {
     $('body').fadeIn('fast');
     this.turnScore = 0;
     this.turnNumber += 1;
-    return
+    return "Rolled One"
   }
 }
 
@@ -66,14 +66,18 @@ $(function() {
     setPlayerTwoCard();
 
     $('#player_one_roll').click(function() {
-      playerOne.roll();
+      let pOneRoll = playerOne.roll();
       $('.player_one_turn_score').text(`${playerOne.turnScore}`);
-      if (checkForWinner(playerOne) === 'WON') {
+      if (pOneRoll === "Rolled One") {
+        $('#player_one_turn').fadeOut();
+        $('#player_two_turn').fadeIn();
+      }
+      /*if (checkForWinner(playerOne) === 'WON') {
         gameOver();
       } else {
         $('#player_one_turn').fadeOut();
         $('#player_two_turn').fadeIn();
-      }
+      }*/
     });
 
 
