@@ -14,12 +14,12 @@ Player.prototype.roll = function() {
   if (dieRoll != 1){
     $('body').fadeOut('slow');
     $('body').fadeIn('fast');
-    $('.die_image').append(`<img src='img/die${dieRoll}.svg' alt='A picture of a die with ${dieRoll} displayed'>`)
+    $('.die_image').append(`<img src='img/die${dieRoll}.svg' class="die_images" alt='A picture of a die with ${dieRoll} displayed'>`)
     this.turnScore += dieRoll
   } else if (dieRoll === 1) {
     $('body').fadeOut('slow');
     $('body').fadeIn('fast');
-    $('.die_image').append(`<img src='img/die${dieRoll}.svg' alt='A picture of a die with ${dieRoll} displayed'>`)
+    $('.die_image').append(`<img src='img/die${dieRoll}.svg' class="die_images" alt='A picture of a die with ${dieRoll} displayed'>`)
     this.turnScore = 0;
     return "Rolled One"
   }
