@@ -38,16 +38,28 @@ $(function() {
     //Create the two Players.
     let playerOneName = $(`#player_one_name`).val();
     let playerTwoName = $(`#player_two_name`).val();
-    let playerOne = new Player(playerOneName, 1, 0, 0);
-    let playerTwo = new Player(playerTwoName, 1, 0, 0);
+    const playerOne = new Player(playerOneName, 1, 0, 0);
+    const playerTwo = new Player(playerTwoName, 1, 0, 0);
     console.log(playerOne, playerTwo)
+
     $(`#initial_info`).slideUp();
     $(`#game`).slideDown();
+    //Set Player turn cards
+    function setPlayerOneCard () {
+      $('.player_one_name_display').text(`${playerOne.playerName}`);
+      $('.player_one_turn').text(`${playerOne.turnNumber}`);
+      $('.player_one_turn_score').text(`${playerOne.turnScore}`);
+      $('.player_one_total_score').text(`${playerOne.totalScore}`);
+    }
 
-    $('.player_one_name_display').text(`${playerOne.playerName}`);
-    $('.player_one_turn').text(`${playerOne.turnNumber}`);
-    $('.player_two_name_display').text(`${playerTwo.playerName}`);
-    $('.player_two_turn').text(`${playerTwo.turnNumber}`);
+    function setPlayerTwoCard () {
+      $('.player_two_name_display').text(`${playerTwo.playerName}`);
+      $('.player_two_turn').text(`${playerTwo.turnNumber}`);
+      $('.player_two_turn_score').text(`${playerTwo.turnScore}`);
+      $('.player_two_total_score').text(`${playerTwo.totalScore}`);
+    }
+    setPlayerOneCard();
+    setPlayerTwoCard();
 
 
   });
