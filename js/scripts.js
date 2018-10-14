@@ -45,8 +45,10 @@ $(function() {
     $(`#game`).slideDown();
 
     $('.player_one_name_display').text(`${playerOne.playerName}`);
+    $('.player_one_turn').text(`${playerOne.turnNumber}`);
     $('.player_two_name_display').text(`${playerTwo.playerName}`);
+    $('.player_two_turn').text(`${playerTwo.turnNumber}`);
 
-    playerTwo.roll();
+
   });
 });
