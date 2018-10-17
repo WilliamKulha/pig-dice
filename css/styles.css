@@ -36,12 +36,19 @@ body, html {
   margin-right: auto;
 }
 
+#two_player_form {
+  display:none;
+}
+
+#one_player_form {
+  display:none;
+}
+
 .one_dice {
   background-image: url("../img/die1.svg");
   height:100px;
   width:100px;
   background-size:100%;
-  border-radius:17px;
 }
 
 .two_dice {
@@ -49,9 +56,68 @@ body, html {
   background-size: 100%;
   height:100px;
   width:100px;
-  border-radius:17px;
 }
 
-#two_player_form {
-  display:none;
+
+/* This method of using an image for a radio button is from https://gist.github.com/rcotrina94/7828886#file-how-to-use-images-as-radio-buttons-md */
+.dice_selector input {
+  margin:0;padding:0;
+  -webkit-appearance:none;
+    -moz-appearance:none;
+      appearance:none;
+}
+
+.dice_selector input:active +.drink_dice{opacity: .9;}
+.dice_selector input:checked +.drink_dice{
+  -webkit-filter: none;
+    -moz-filter:none;
+      filter:none;
+}
+
+.drink_dice{
+  cursor:pointer;
+  display:inline-block;
+  -webkit-transition: all 100ms ease-in;
+       -moz-transition: all 100ms ease-in;
+            transition: all 100ms ease-in;
+  -webkit-filter: brightness(1.8) grayscale(1) opacity(.7);
+     -moz-filter: brightness(1.8) grayscale(1) opacity(.7);
+        filter: brightness(1.8) grayscale(1) opacity(.7);
+}
+
+.drink_dice:hover {
+  -webkit-filter: brightness(1.2) grayscale(.5) opacity(.9);
+       -moz-filter: brightness(1.2) grayscale(.5) opacity(.9);
+          filter: brightness(1.2) grayscale(.5) opacity(.9);
+}
+
+.dice_selector_comp input {
+  margin:0;padding:0;
+  -webkit-appearance:none;
+    -moz-appearance:none;
+      appearance:none;
+}
+
+.dice_selector_comp input:active +.drink_dice_comp{opacity: .9;}
+.dice_selector_comp input:checked +.drink_dice_comp{
+  -webkit-filter: none;
+    -moz-filter:none;
+      filter:none;
+}
+
+.drink_dice_comp {
+  cursor:pointer;
+  display:inline-block;
+  -webkit-transition: all 100ms ease-in;
+       -moz-transition: all 100ms ease-in;
+            transition: all 100ms ease-in;
+  -webkit-filter: brightness(1.8) grayscale(1) opacity(.7);
+     -moz-filter: brightness(1.8) grayscale(1) opacity(.7);
+        filter: brightness(1.8) grayscale(1) opacity(.7);
+}
+
+.drink_dice_comp:hover {
+  -webkit-filter: brightness(1.2) grayscale(.5) opacity(.9);
+       -moz-filter: brightness(1.2) grayscale(.5) opacity(.9);
+          filter: brightness(1.2) grayscale(.5) opacity(.9);
 }
