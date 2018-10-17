@@ -63,7 +63,13 @@ Player.prototype.checkForWinner = function() {
 
 
 $(function() {
-  //For one die
+  //For 2 Players
+  $('#two_players').click(function(event) {
+    event.preventDefault();
+    $('#two_player_form').slideDown();
+    $('.choose_players').slideUp();
+  })
+  //For dice selection
   $('.one_dice').click(function(event) {
     event.preventDefault();
     //Create the two Players.
