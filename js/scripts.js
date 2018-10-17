@@ -63,23 +63,16 @@ Player.prototype.checkForWinner = function() {
 
 
 $(function() {
-  //For 2 Players
-  $('#two_players').click(function(event) {
-    event.preventDefault();
-    $('#two_player_form').slideDown();
+  $('#two_players').click(function() {
     $('.choose_players').slideUp();
+    $('#two_player_form').slideDown();
+  });
+  $('#computer').click(function() {
+    $('.choose_players').slideUp();
+    $('#one_player_form').slideDown();
   })
-  //For dice selection
-  $('.one_dice').click(function(event) {
-    event.preventDefault();
-    //Create the two Players.
-    let playerOneName = $(`#player_one_name`).val();
-    let playerTwoName = $(`#player_two_name`).val();
-    const playerOne = new Player(playerOneName, 1, 0, 0);
-    const playerTwo = new Player(playerTwoName, 1, 0, 0);
-
-    $(`#initial_info`).slideUp();
-    $(`#game`).slideDown();
+});
+    /*
     //Set Player turn cards
     function setPlayerOneCard () {
       $('.player_one_name_display').text(`${playerOne.playerName}`);
@@ -222,6 +215,8 @@ $(function() {
         } else {
           return;
         }
-      });
+    });
   });
+
 });
+*/
