@@ -28,23 +28,29 @@
             <p>The first player to score 100 or more points wins.</p>
           </div>
           <div class="col-sm-6">
-            <div class="text-center players_header">
+            <div class="text-center">
               <h3>PLAYERS</h3>
             </div>
-            <form id="play">
-              <div class="form-group">
-                <label for="player_one_name">Player One Name</label>
-                <input type="text" class="form-control" id="player_one_name" required>
-              </div>
-              <div class="form-group">
-                <label for="player_two_name">Player Two Name</label>
-                <input type="text" class="form-control" id="player_two_name" required>
-              </div>
-              <div class="btn-group">
-                <button type="button" class="one_dice"></button>
-                <button type="button" class="two_dice"></button>
-              </div>
-            </form>
+            <div class="choose_players text-center">
+              <button type="button" id='two_players' class="btn btn-primary">2 Players</button>
+              <button type="btton" id="easy_computer" class="btn btn-danger">VS Computer</button>
+            </div>
+            <div id='two_player_form'>
+              <form id="play">
+                <div class="form-group">
+                  <label for="player_one_name">Player One Name</label>
+                  <input type="text" class="form-control" id="player_one_name" required>
+                </div>
+                <div class="form-group">
+                  <label for="player_two_name">Player Two Name</label>
+                  <input type="text" class="form-control" id="player_two_name" required>
+                </div>
+                <div class="btn-group">
+                  <button type="button" class="one_dice"></button>
+                  <button type="button" class="two_dice"></button>
+                </div>
+              </form>
+            </div>
           </div>
         </div>
       </div>
@@ -77,7 +83,7 @@
             <h5>Score this turn: <span class="player_two_turn_score"></span></h5>
             <h5>Total Score: <span class="player_two_total_score"></span></h5>
             <div class="row" id="player_two_turn">
-              <div class="col-sm-6">
+              <div class="col-sm-12">
                 <div class="btn-group">
                   <button type="button" class="btn btn-primary" id="player_two_roll">Roll</button>
                   <button type="button" class="btn btn-danger" id="player_two_hold">Hold</button>
