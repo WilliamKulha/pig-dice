@@ -1,13 +1,14 @@
+
 //Player Constructor
 
-function Player(name, turnNumber, turnScore, totalScore, diceNumber) {
+function Player(name, turnNumber, turnScore, totalScore, diceNumber, iscomp) {
   this.playerName = name;
   this.turnNumber = turnNumber;
   this.turnScore = turnScore;
   this.totalScore = totalScore;
   this.diceNumber = diceNumber;
+  this.computer = iscomp;
 }
-
 //method to roll die.
 Player.prototype.roll = function() {
   if (this.diceNumber === 1) {
@@ -48,30 +49,6 @@ Player.prototype.roll = function() {
       return "Rolled One"
     }
   }
-
-}
-
-Player.prototype.rollTwo = function() {
-  let dieRoll1 = Math.floor(Math.random() * 6) + 1
-  let dieRoll2 = Math.floor(Math.random() * 6) + 1
-  $('.die_image').empty();
-  $('.die_image2').empty();
-  if (dieRoll1 != 1 && dieRoll2 != 1){
-    $('body').fadeOut('slow');
-    $('body').fadeIn('fast');
-    $('.die_image').append(`<img src='img/die${dieRoll1}.svg' class="die_images" alt='A picture of a die with ${dieRoll1} displayed'>`)
-    $('.die_image2').append(`<img src='img/die${dieRoll2}.svg' class="die_images" alt='A picture of a die with ${dieRoll2} displayed'>`)
-    let totalRoll = dieRoll1 + dieRoll2
-    this.turnScore += totalRoll
-
-  } else if (dieRoll1 === 1 || dieRoll2 === 1) {
-    $('body').fadeOut('slow');
-    $('body').fadeIn('fast');
-    $('.die_image').append(`<img src='img/die${dieRoll1}.svg' class="die_images" alt='A picture of a die with ${dieRoll1} displayed'>`)
-    $('.die_image2').append(`<img src='img/die${dieRoll2}.svg' class="die_images" alt='A picture of a die with ${dieRoll2} displayed'>`)
-    this.turnScore = 0;
-    return "Rolled One"
-  }
 }
 
 Player.prototype.hold = function() {
@@ -86,8 +63,42 @@ Player.prototype.checkForWinner = function() {
   }
 }
 
+function Game(playerOne, playerTwo) {
+  this.players = [{playerOne}, {playerTwo}];
+  this.currentPlayerIndex = 0;
+}
 
+Game.prototype.switchTurn = function() {
+  this.currentPlayerIndex = (this.currentPlayerIndex +1) % 2;
+}
 
+Game.prototype.currentPlayer = function() {
+  return this.players[this.currentPlayerIndex];
+}
+
+const updateGame = function(game) {
+  game.switchTurn();
+
+}
+
+function computerTurn(game, player) {
+  let computerRoll = player.roll();
+  if (computerRoll === 'Rolled One') {
+    updateGame(game);
+  } else if (computerRoll != 'Rolled One') {
+    let computerRoll2 = player.roll();
+    if (computerRoll2 === 'Rolled One') {
+      updateGame(game);
+    }
+  } else computerHold(game)
+}
+
+function computerHold(game, player) {
+  player.totalScore += this.turnScore;
+  player.turnScore = 0;
+  player.turnNumber += 1
+  updateGame(game);
+}
 //function for Player 1's Hold
 
 //Function for Player 2's rolls
@@ -97,6 +108,7 @@ Player.prototype.checkForWinner = function() {
 
 
 $(function() {
+  let newGame;
   $('#two_players').click(function() {
     $('.choose_players').slideUp();
     $('#two_player_form').slideDown();
@@ -189,6 +201,82 @@ $(function() {
   $('#computer').click(function() {
     $('.choose_players').slideUp();
     $('#one_player_form').slideDown();
+    $('#vsCompPlay').submit(function(event) {
+      event.preventDefault();
+      $('#initial_info').slideUp();
+      $('#game').slideDown();
+      let playerName = $('#player_name').val();
+      let computerName = 'HAL';
+      let diceNumber = parseInt($("input:radio[name='dice']:checked").val());
+      const playerOne = new Player(playerName, 1, 0, 0, diceNumber, false);
+      const playerTwo = new Player(computerName, 1, 0, 0, diceNumber, true);
+      newGame = new Game(playerOne, playerTwo);
+      console.log(newGame);
+      //Set Player turn cards
+      function setPlayerOneCard () {
+        $('.player_one_name_display').text(`${playerOne.playerName}`);
+        $('.player_one_turn').text(`${playerOne.turnNumber}`);
+        $('.player_one_turn_score').text(`${playerOne.turnScore}`);
+        $('.player_one_total_score').text(`${playerOne.totalScore}`);
+      }
+
+//can this be refactored?
+      function setPlayerTwoCard () {
+        $('.player_two_name_display').text(`${playerTwo.playerName}`);
+        $('.player_two_turn').text(`${playerTwo.turnNumber}`);
+        $('.player_two_turn_score').text(`${playerTwo.turnScore}`);
+        $('.player_two_total_score').text(`${playerTwo.totalScore}`);
+      }
+
+      setPlayerOneCard();
+      setPlayerTwoCard();
+
+
+      //Player One Turn
+      console.log(newGame.currentPlayer());
+      $('#player_one_roll').click(function() {
+        let pOneRoll = playerOne.roll();
+        $('.player_one_turn_score').text(`${playerOne.turnScore}`);
+        if (pOneRoll === "Rolled One") {
+          playerOne.turnNumber += 1;
+          setPlayerOneCard();
+          newGame.switchTurn();
+          $('#player_one_turn').fadeOut();
+          $('#player_two_turn').fadeIn();
+        }
+      });
+      $('#player_one_hold').click(function() {
+        playerOne.hold();
+        newGame.switchTurn();
+        $('#player_one_turn').fadeOut();
+        $('#player_two_turn').fadeIn();
+        setPlayerOneCard();
+
+        let wonOrNot = playerOne.checkForWinner();
+        if (wonOrNot === "WON") {
+          $(`body`).fadeOut('slow');
+          alert(`${playerOne.playerName} has won with ${playerOne.totalScore} points! If you'd like to play again, refresh the page.`)
+        } else {
+          return;
+        }
+      });
+      //Computer Turn
+      if (newGame.currentPlayer.computer === true){
+        computerTurn(newGame, playerTwo);
+        setPlayerTwoCard();
+        $('#player_two_turn').fadeOut();
+        $('#player_one_turn').fadeIn();
+
+
+        let wonOrNot = playerTwo.checkForWinner();
+        if (wonOrNot === "WON") {
+          $(`body`).fadeOut('slow');
+          alert(`${playerTwo.playerName} has won with ${playerTwo.totalScore} points! If you'd like to play again, refresh the page.`)
+        } else {
+          return;
+        }
+      }
+    });
   });
 });
     /*
