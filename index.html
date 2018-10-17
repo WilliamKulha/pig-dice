@@ -33,7 +33,7 @@
             </div>
             <div class="choose_players text-center">
               <button type="button" id='two_players' class="btn btn-primary">2 Players</button>
-              <button type="btton" id="easy_computer" class="btn btn-danger">VS Computer</button>
+              <button type="button" id="computer" class="btn btn-danger">VS Computer</button>
             </div>
             <div id='two_player_form'>
               <form id="play">
@@ -45,9 +45,35 @@
                   <label for="player_two_name">Player Two Name</label>
                   <input type="text" class="form-control" id="player_two_name" required>
                 </div>
-                <div class="btn-group">
-                  <button type="button" class="one_dice"></button>
-                  <button type="button" class="two_dice"></button>
+                <div class="form-group dice_selector">
+                  <input id="one_dice" type="radio" name="dice" value=1></input>
+                  <label class="drink_dice one_dice" for="one_dice"></label>
+                  <input id="two_dice" type="radio" name="dice" value=2></input>
+                  <label class="drink_dice two_dice" for="two_dice"></label>
+                </div>
+                <div class="text-center">
+                  <button type="submit" class="btn btn-primary">PLAY</button>
+                </div>
+              </form>
+            </div>
+            <div id="one_player_form">
+              <form id="vsCompPlay">
+                <div class="form-group">
+                  <label for="player_name">Player's name</label>
+                  <input type="text" class="form-control" id="player_name" required>
+                </div>
+                <div class="form-group">
+                  <label for="computer">Your AI Opponent</label>
+                  <input class="form-control" id="computer" type="text" placeholder="HAL" disabled>
+                </div>
+                <div class="form-group dice_selector_comp">
+                  <input id="one_dice_comp" type="radio" name="dice" value=1></input>
+                  <label class="drink_dice_comp one_dice" for="one_dice_comp"></label>
+                  <input id="two_dice_comp" type="radio" name="dice" value=2></input>
+                  <label class="drink_dice_comp two_dice" for="two_dice_comp"></label>
+                </div>
+                <div class="text-center">
+                  <button type="submit" class="btn btn-primary">PLAY</button>
                 </div>
               </form>
             </div>
